@@ -153,6 +153,18 @@ endmacro (install_hook)
 # bulk of the python configuration is further down in the file.
 if (OPM_ENABLE_PYTHON)
   find_package(PythonInterp REQUIRED)
+  message("PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}")
+  #find_package(PythonLibs)
+  message("PYTHON_INCLUDE_DIRS=${PYTHON_INCLUDE_DIRS} PYTHON_LIBRARIES={PYTHON_LIBRARIES}")
+  execute_process(COMMAND "${PYTHON_EXECUTABLE}" "-c" "from distutils import sysconfig; print(sysconfig.get_python_inc(plat_specific=True));"
+    RESULT_VARIABLE _PYTHON_DIR_SUCCESS
+    OUTPUT_VARIABLE PYTHON_INCLUDE_DIR
+    ERROR_VARIABLE _PYTHON_ERROR_VALUE)
+  if(NOT _PYTHON_DIR_SUCCESS MATCHES 0)
+    message(FATAL_ERROR "Could not determine Python include directory. Error: ${_PYTHON_ERROR_VALUE} PYTHON_INCLUDE_DIR=${PYTHON_INCLUDE_DIR}")
+  endif()
+  set(PYTHON_INCLUDE_DIRS ${PYTHON_INCLUDE_DIR})
+  message(PYTHON_INCLUDE_DIRS=${PYTHON_INCLUDE_DIR}"")
   if (OPM_ENABLE_EMBEDDED_PYTHON)
     find_package(PythonLibs REQUIRED)
     list(APPEND opm-common_LIBRARIES ${PYTHON_LIBRARY})
