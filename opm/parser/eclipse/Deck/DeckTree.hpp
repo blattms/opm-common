@@ -25,7 +25,6 @@
 #include <unordered_set>
 #include <optional>
 
-
 namespace Opm {
 
 
