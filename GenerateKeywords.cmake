@@ -121,7 +121,7 @@ if (OPM_ENABLE_PYTHON)
 endif()
 
 
-
+message("gen OPM_ENABLE_PYTHON=${OPM_ENABLE_PYTHON}")
 add_custom_command( OUTPUT
   ${_tmp_output}
   COMMAND genkw ${genkw_argv}
@@ -131,4 +131,4 @@ add_custom_command( OUTPUT
 add_custom_command(OUTPUT
   ${_target_output}
   DEPENDS ${PROJECT_BINARY_DIR}/tmp_gen/ParserKeywords/A.cpp
-  COMMAND ${CMAKE_COMMAND} -DBASE_DIR=${PROJECT_BINARY_DIR} -P ${PROJECT_SOURCE_DIR}/CopyHeaders.cmake)
+  COMMAND ${CMAKE_COMMAND}  -DOPM_ENABLE_PYTHON=${OPM_ENABLE_PYTHON} -DBASE_DIR=${PROJECT_BINARY_DIR} -P ${PROJECT_SOURCE_DIR}/CopyHeaders.cmake)

@@ -191,7 +191,7 @@ void Parser::addDefaultKeywords() {
 #include <opm/input/eclipse/Deck/Deck.hpp>
 #include <opm/input/eclipse/Parser/ErrorGuard.hpp>
 
-#include "export.hpp"
+#include "python/cxx/export.hpp"
 
 void python::common::export_ParserKeywords(py::module& module) {
 

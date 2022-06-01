@@ -404,18 +404,25 @@ if (OPM_ENABLE_PYTHON)
     string(REPLACE ";" "," SETUP_PY_LINKAGE "${opm-common_PYTHON_LINKAGE}")
   endif()
 
+  # Set RELATIVE_PROJECT_SOURCE_DIR to be the PROJECT_SOURCE_DIR relative to
+  # PROJECT_BINARY_DIR (setup.py only works for relative package dirs.
+  file(RELATIVE_PATH _setup_relative_root_dir "${PROJECT_BINARY_DIR}" "/")
+  message("_setup_relative_root_dir=${_setup_relative_root_dir}")
+  string(REGEX REPLACE "^/" "" _setup_source_dir_as_root_subdir "${PROJECT_SOURCE_DIR}")
+  set(RELATIVE_PROJECT_SOURCE_DIR
+    ../${_setup_relative_root_dir}/${_setup_source_dir_as_root_subdir})
   configure_file (${PROJECT_SOURCE_DIR}/python/setup.py.in ${PROJECT_BINARY_DIR}/python/setup.py)
   file(COPY ${PROJECT_SOURCE_DIR}/python/README.md DESTINATION ${PROJECT_BINARY_DIR}/python)
   execute_process(COMMAND ${Python3_EXECUTABLE} target_name.py
                   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/python
                   OUTPUT_VARIABLE python_lib_target)
 
-  add_custom_target(copy_python ALL
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/python ${PROJECT_BINARY_DIR}/python)
+#  add_custom_target(copy_python ALL
+#    COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/python ${PROJECT_BINARY_DIR}/python)
 
   add_custom_command(OUTPUT python/opm/${python_lib_target}
                      DEPENDS ${PYTHON_CXX_DEPENDS}
-                     DEPENDS copy_python
+                     #DEPENDS copy_python
                      COMMAND ${Python3_EXECUTABLE} ${PROJECT_BINARY_DIR}/python/setup.py
                                                       build
                                                       build_ext

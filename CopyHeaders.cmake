@@ -6,7 +6,8 @@ execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different
                         ${BASE_DIR}/tmp_gen/TestKeywords.cpp
                         ${BASE_DIR}/TestKeywords.cpp)
 
-if (EXISTS ${BASE_DIR}/python/cxx)
+message("OPM_ENABLE_PYTHON=${OPM_ENABLE_PYTHON}")
+if (OPM_ENABLE_PYTHON)
   execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different
                           ${BASE_DIR}/tmp_gen/builtin_pybind11.cpp
                           ${BASE_DIR}/python/cxx/builtin_pybind11.cpp)
