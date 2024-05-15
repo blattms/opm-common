@@ -669,7 +669,7 @@ void Opm::InitIO::write(const ::Opm::EclipseState&              es,
 
         auto multipliers = es.getTransMult()
             .convertToSimProps(grid.getNumActive(), writeAll);
-        if (es.fieldProps().has_double("MULTPV")) {
+        if (false && es.fieldProps().has_double("MULTPV")) {
             multipliers.insert("MULTPV", UnitSystem::measure::identity,
                         es.fieldProps().get_double("MULTPV"),
                         data::TargetType::INIT);
