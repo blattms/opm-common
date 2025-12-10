@@ -64,7 +64,6 @@ std::tuple<double,double, double, double> solution_nestedLGR(){
     return std::make_tuple(depth_lgr1, vol_lgr1, depth_lgr2, vol_lgr2);
 }
 
-
 LgrCollection read_lgr(const std::string& deck_string,
                        const std::size_t nx,
                        const std::size_t ny,
@@ -491,6 +490,7 @@ SCHEDULE
     const auto& lgr1 = eclipse_grid_file.getLGRCell("LGR1");
     const auto& lgr2 = eclipse_grid_file.getLGRCell("LGR2");
 
+    const auto& coordlgr1 = lgr1.getCOORD();
     // Intialize host_cell numbering.
     eclipse_grid_file.init_children_host_cells();
     // Save EclipseGrid.
