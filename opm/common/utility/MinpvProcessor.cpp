@@ -17,9 +17,9 @@
   along with OPM.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include <config.h>
-#include <opm/grid/MinpvProcessor.hpp>
+#include <opm/common/utility/MinpvProcessor.hpp>
 
-#include <opm/grid/utility/ErrorMacros.hpp>
+#include <opm/common/ErrorMacros.hpp>
 
 #include <algorithm>
 #include <cassert>

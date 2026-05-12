@@ -25,7 +25,7 @@
 #define BOOST_TEST_MODULE MinpvProcessorTest
 #include <boost/test/unit_test.hpp>
 
-#include <opm/grid/MinpvProcessor.hpp>
+#include <opm/common/utility/MinpvProcessor.hpp>
 
 
 BOOST_AUTO_TEST_CASE(GAP_MAXGAP)
