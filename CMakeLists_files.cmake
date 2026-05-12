@@ -58,6 +58,7 @@ list(APPEND MAIN_SOURCE_FILES
   opm/common/utility/DemangledType.cpp
   opm/common/utility/FileSystem.cpp
   opm/common/utility/MemPacker.cpp
+  opm/common/utility/MinpvProcessor.cpp
   opm/common/utility/OpmInputError.cpp
   opm/common/utility/shmatch.cpp
   opm/common/utility/String.cpp
@@ -530,6 +531,7 @@ list(APPEND TEST_SOURCE_FILES
   tests/test_LinearisedOutputTable.cpp
   tests/test_LogiHEAD.cpp
   tests/test_messagelimiter.cpp
+  tests/test_minpvprocessor.cpp
   tests/test_nonuniformtablelinear.cpp
   tests/test_OpmInputError_format.cpp
   tests/test_OpmLog.cpp
