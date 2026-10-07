@@ -48,6 +48,18 @@ if(QuadMath_FOUND AND NOT TARGET QuadMath::QuadMath)
   # Check for numeric_limits specialization
   cmake_push_check_state()
   set(CMAKE_REQUIRED_LIBRARIES quadmath)
+  # Whether the standard library provides __float128 overloads depends on
+  # the language dialect, e.g. std::abs(__float128) is a GNU extension.
+  # The checks must therefore be done in the dialect OPM is built with,
+  # regardless of whether the caller has set it up yet (downstream modules
+  # find this package before including OpmInit).
+  foreach(var CMAKE_CXX_STANDARD CMAKE_CXX_EXTENSIONS)
+    if(DEFINED ${var})
+      set(QuadMath_SAVED_${var} ${${var}})
+    endif()
+  endforeach()
+  set(CMAKE_CXX_STANDARD 20)
+  set(CMAKE_CXX_EXTENSIONS OFF)
   set(CMAKE_REQUIRED_FLAGS)
   if(${CMAKE_CXX_COMPILER_ID} STREQUAL GNU)
     set(CMAKE_REQUIRED_FLAGS "-fext-numeric-literals")
@@ -91,7 +103,14 @@ if(QuadMath_FOUND AND NOT TARGET QuadMath::QuadMath)
      __float128 b=10;
      __float128 c=std::abs(b);
   }" QuadMath_HAS_MATH_ABS)
-  cmake_pop_check_state()  # Reset CMAKE_REQUIRED_XXX variables
+  foreach(var CMAKE_CXX_STANDARD CMAKE_CXX_EXTENSIONS)
+    if(DEFINED QuadMath_SAVED_${var})
+      set(${var} ${QuadMath_SAVED_${var}})
+      unset(QuadMath_SAVED_${var})
+    else()
+      unset(${var})
+    endif()
+  endforeach()
   if(QuadMath_HAS_MATH_OPS)
     target_compile_definitions(QuadMath::QuadMath INTERFACE QUADMATH_HAS_MATH_OPERATORS=1)
   endif()
